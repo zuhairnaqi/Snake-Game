@@ -15,10 +15,11 @@ let score = 0;
 let dontFollowThisKeyCode = '';
 
 function drawCanvas() {
-    // Draw background on canvas
+    // Change Direction with respect to axis
     snakePositionX += xVelocity;
     snakePositionY += yVelocity;
-
+    
+    // If snake eats itself
     if (xVelocity !== 0 || yVelocity !== 0) {
         for(const {x, y} of snakePositions) {
             if (x === snakePositionX && y === snakePositionY) {
@@ -61,11 +62,12 @@ function drawCanvas() {
         x: snakePositionX,
         y: snakePositionY
     })
-
+    
+    // Draw background on canvas
     context.fillStyle = '#000';
     context.fillRect(0, 0 , canvas.width, canvas.height);
 
-    // Draw apply on canvas
+    // Draw apple on canvas
     context.fillStyle = '#ff0000';
     context.fillRect(applePositionX * tiles, applePositionY * tiles, tiles -2, tiles - 2);
 
@@ -75,6 +77,7 @@ function drawCanvas() {
         context.fillRect(x * tiles, y * tiles, tiles -2, tiles - 2);
     }
 
+    // Remove old tail of snake
     while(snakePositions.length > snakeTail) {
         snakePositions.shift();
     }
@@ -83,8 +86,6 @@ function drawCanvas() {
 setInterval(() => {
     drawCanvas();
 }, 1000 / speed);
-
-
 
 document.addEventListener('keyup', changeDirection)
 
